@@ -1,0 +1,142 @@
+#whale-form a {/*firefox outline (dotted border)*/
+    outline:none;
+}
+.ccm-ui .well a > i{
+    margin-left:5px;
+}
+.ccm-ui .well td:first-child{
+	width:50%;
+}
+#item-row-wrap{
+	padding-bottom: 20px;
+}
+
+#whale-form .row{
+    margin-bottom: 10px!important;
+}
+#whale-form label,
+#whale-form p.text-muted
+{
+    margin-bottom: 0;
+}
+#whale-form .row:first-child{
+}
+#whale-form hr{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-color: #ddd;
+}
+
+#whale-form .control-label{
+    text-align: left;
+}
+#whale-form .text-muted{
+    font-weight: normal;
+    font-size:small;
+}
+#whale-form .input-group{
+    margin-bottom: 5px;
+}
+#whale-form .label{
+    margin-top: 5px;
+}
+
+
+/*well headers*/
+#whale-form h2{
+    margin-top: 0px!important;
+    margin-bottom: 0px!important;
+    font-size: 25px!important;
+    font-weight: bold;
+    line-height: 30px;
+}
+#whale-form h2 a{
+    color: #333!important;
+    font-size: 15px;
+    line-height: 30px;
+}
+#whale-form h2 a i{
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 30px;
+}
+/*
+#whale-form textarea{
+    height: 4em;
+}
+*/
+#whale-form .internal {
+    margin-top: 5px; 
+}
+#whale-form .internal .control-label{
+    text-indent: 5px;
+}
+
+.nav-tabs input[type="checkbox"]{
+    margin: 0!important;
+}
+
+/*charts*/
+.graph-container{
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 2px #eee;
+    /*margin: 10px 0;*/
+    margin-bottom: 10px;
+    background-color: white;
+    min-height: 450px;
+}
+#whale-form table.table-summary {
+    margin-bottom: 10px;
+}
+
+#whale-form table {
+    background-color: white;
+    margin-bottom: 5px;
+    table-layout: fixed;
+}
+#whale-form table.table-visitors tbody{
+    background-color: #fbfbfb;
+}
+
+#whale-form table.table-visitors th{
+    font-weight: 100;
+    font-size: 13px;
+}
+#whale-form table.table-visitors-header th{
+    font-weight: 700;
+}
+
+#whale-form table.table-visitors tr th:nth-child(1) {
+    width: 15%;
+}
+#whale-form table.table-visitors tr th:nth-child(2) {
+    width: 5%;
+}
+#whale-form table.table-visitors tr th:nth-child(3) {
+    width: 15%;
+}
+#whale-form table.table-visitors tr th:nth-child(4) {
+    width: 15%;
+}
+#whale-form table.table-visitors tr th:nth-child(5){
+    width: 30%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#whale-form img.flag{
+    margin-right:5px;
+}
+
+.fa.fa-level-down{
+    float:right;
+}
+.fa.fa-level-down:after{
+    clear: both;
+}
+
+
+#whale-form textarea#embed{
+    cursor: text;
+}
