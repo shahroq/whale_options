@@ -3,7 +3,7 @@
     $ch = Core::make('helper/form/color');
     
     $fld_id = isset($field['id']) ? $field['id']:'';
-    $fld_value = isset($field['value']) ? trim($field['value'], '#'):'';
+    $fld_value = isset($field['value']) ? trim($field['value'], ''):'';
     $fld_container_class = isset($field['container_class']) ? $field['container_class']:'';
 ?>
 <div class="row">
