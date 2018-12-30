@@ -50,9 +50,9 @@ Option File arguments:
 
 Changelog
 ---------
-*1.1.0 : 2018-12-30
+* 1.1.0 : 2018-12-30
 	- Minor changes
-*1.0.0 
+* 1.0.0 
 	Initial Release	
 
 
