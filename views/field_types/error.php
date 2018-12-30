@@ -3,7 +3,7 @@
 	<?php 
 	echo t('Error on '); 
 	echo (isset($field['title'])) ? '"'.$field['title'].'"' : '';
-	echo t(' entry'); 
+	echo ' ' . t('entry'); 
 	echo (isset($field['error'])) ? ': '.$field['error'] : ''
 	?>
 </div>

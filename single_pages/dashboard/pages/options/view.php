@@ -1,7 +1,7 @@
 <?php
 /**
  * @author      shahroq <shahroq \at\ yahoo.com>
- * @copyright   Copyright (c) 2016 shahroq
+ * @copyright   Copyright (c) 2018 shahroq
  * http://concrete5.killerwhalesoft.com/addons/
  */
 defined('C5_EXECUTE') or die('Access denied.');
@@ -32,6 +32,8 @@ $buttonText = t('Update Options');
         <div class="well <?php echo $panel['id'] ?>">
             <h2>
                 <?php echo $panel['title'] ?>&nbsp;
+                <?php echo isset($panel['subtitle']) ? '<small>'.$panel['subtitle'] . '</small>':'' ?>
+                
                 <a href="#<?php echo 'form_'.$panel['id'] ?>" class="show-hide pull-right" title="<?php echo t('Click to Show/Hide')?>"><i class="fa <?php echo ($panel['closed']) ? 'fa-chevron-down': 'fa-chevron-up'; ?>"></i></a>
             </h2>   
             <div id="<?php echo 'form_'.$panel['id'] ?>" style="display:<?php echo ($panel['closed']) ? 'none': ''; ?>;">

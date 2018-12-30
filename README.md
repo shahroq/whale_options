@@ -17,10 +17,14 @@ Supported field types:
 * image: Image Selector
 * page: Page Selector
 * divider: divide entries with hr
+* header: header
 
 Define Options:
 ---------------
-There is an "option.php" inside package root that as default is loaded. It is recommended not change this file, instead you can copy this file into your active theme root and change options.
+options.php file can be place in any of these paths:
+1. /application/config/options/options.php
+2. <active theme>/options/options.php
+3. /packages/whale_options/options/options.php
 
 Read Options:
 -------------
@@ -42,10 +46,13 @@ Option File arguments:
 * container_class: entry container class (e.g: col-xs-4)
 * value: initial value
 * options: array of key/values (types: select, radio) 
+* method: name of method in package controller which run on save (it receives the field value)
 
 Changelog
 ---------
-= 1.0.1 =
-* First Release
+*1.1.0 : 2018-12-30
+	- Minor changes
+*1.0.0 
+	Initial Release	
 
 

@@ -1,9 +1,14 @@
 <?php
 /**
  * @author 		shahroq <shahroq \at\ yahoo.com>
- * @copyright  	Copyright (c) 2017 shahroq
+ * @copyright  	Copyright (c) 2018 shahroq
  * http://concrete5.killerwhalesoft.com/addons/
- * To start using this add-on you should have an "options.php" file inside this add-on root or in the active theme root. There is a sample "options-sample.php" file inside the package root, copy this file to your theme, rename it to "options.php" and start tweaking it. This is a 3-dimensional array that each dimension presens Tabs > Panels > Fields. It contains every possible fields & attributes, so compare this file with result at your concrete5 "theme options" page in the dashboard should give an overall understanding of the variable structure.
+ * To start using this add-on you should have an "options.php" file inside one of these folders:
+ * 1- /application/config/options/options.php
+ * 2- <active theme>/options/options.php
+ * 3- /packages/whale_options/options/options.php
+ * There is a sample "options-sample.php" file inside the package /options/ folder. Copy and rename this file to on of those locations and start tweaking it. 
+ * It contains a 3-dimensional array each of which presents Tabs > Panels > Fields consecutively. The sample file holds every possible field & attribute, so compare this file with result at your concrete5 "theme options" page in the dashboard should give an overall understanding of what every option stands for.
  */
 defined('C5_EXECUTE') or die('Access denied.');
 
@@ -17,14 +22,22 @@ defined('C5_EXECUTE') or die('Access denied.');
 				'panels' => array(
 					//Tab A > Panel 1
 					array(
-						'id'  => 'panela1',
+						'id'  => 'panel-a1',
 						'title'  => t('Panel A1'),
+						'subtitle'  => t(''),
 						'fields' => array(
 							array(
 								'id'   => 'text_1',
 								'type' => 'text',
 								'title' => t('Text 1'),
-								'required' => TRUE
+								'description' => t('Textfield Description'),
+								'placeholder' => t('Textfield Placeholder'),
+								'style' => '',
+								'class' => '',
+								'container_class' => '', //'col-md-3',
+								'required' => TRUE,
+								'value' => '',
+								//'method' => 'my_method', //add a method with this name to package controller 
 							),
 							array(
 								'id'   => 'textarea_1',
@@ -85,11 +98,18 @@ defined('C5_EXECUTE') or die('Access denied.');
 								'description' => t('Page Description'),
 								'value' => 0,
 							),
+							array(
+								'id'   => 'date_1',
+								'type' => 'date',
+								'title' => t('Date 1'),
+								'description' => t('Date Description'),
+								'value' => 0,
+							),
 						),
 					),
 					//Tab A: Panel 2
 					array(
-						'id'  => 'panela2',
+						'id'  => 'panel-a2',
 						'title'  => t('Panel A2'),
 						'closed'  => TRUE,
 						'fields' => array(
@@ -116,7 +136,7 @@ defined('C5_EXECUTE') or die('Access denied.');
 				'panels' => array(
 					//Tab B > Panel 1
 					array(
-						'id'  => 'panelb1',
+						'id'  => 'panel-b1',
 						'title'  => t('Panel B1'),
 						'closed'  => FALSE,
 						'fields' => array(

@@ -8,10 +8,10 @@
     $fld_container_class = isset($field['container_class']) ? $field['container_class']:'';
 
     $fld_attr = array();
-    if(isset($field['placeholder'])) $fld_attr['placeholder'] = $field['placeholder'];
-    if(isset($field['style'])) $fld_attr['style'] = $field['style'];
-    if(isset($field['class'])) $fld_attr['class'] = $field['class'];
-    if(isset($field['maxlength'])) $fld_attr['maxlength'] = $field['maxlength'];
+    if (isset($field['placeholder'])) $fld_attr['placeholder'] = $field['placeholder'];
+    if (isset($field['style'])) $fld_attr['style'] = $field['style'];
+    if (isset($field['class'])) $fld_attr['class'] = $field['class'];
+    if (isset($field['maxlength'])) $fld_attr['maxlength'] = $field['maxlength'];
 ?>
 <div class="row">
     <label class="col-xs-4 control-label">

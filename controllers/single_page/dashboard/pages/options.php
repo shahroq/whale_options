@@ -1,17 +1,18 @@
 <?php
 /**
  * @author shahroq <shahroq \at\ yahoo.com>
- * @copyright Copyright (c) 2017 shahroq.
+ * @copyright Copyright (c) 2018 shahroq.
  * http://concrete5.killerwhalesoft.com/addons/
  */
 namespace Concrete\Package\WhaleOptions\Controller\SinglePage\Dashboard\Pages;
-use \Concrete\Core\Page\Controller\DashboardPageController;
-use Package;
-use Asset;
-use AssetList;
-use Request;
-use Core; 
+
 use Page;
+use Core; 
+use Asset;
+use Package;
+use Request;
+use AssetList;
+use \Concrete\Core\Page\Controller\DashboardPageController;
 
 defined('C5_EXECUTE') or die('Access denied.');
 
@@ -20,6 +21,8 @@ class Options extends DashboardPageController
 
     public $fieldTypes = array();
     public $options = array();
+    public $configNamespace;
+    public $configGroup;
 
     public function on_start()
     {
@@ -34,46 +37,70 @@ class Options extends DashboardPageController
                                 'color',
                                 'image',
                                 'page',
+                                'date',
                                 'divider',
                                 'header',
                                 );
+
+        $this->configNamespace = 'whale_options'; //=active theme handle or current package handle(whale_options)
+        $this->configGroup = 'options';
 
         //Prepare Options
         $config = Core::make('config/database');
         $pkg = Package::getByHandle('whale_options');
         $pkgPath = $pkg->getPackagePath();
 
-        //first check active theme root, then this package root for options.php file
-        $page = Page::getByID(1);
-        $theme = $page->getCollectionThemeObject();
-        $themePath = $theme->getThemeDirectory(); //echo $themePath;
-        //$themeUrl = $theme->getThemeURL(); echo $themeUrl;
+        /*
+        get options.php file from any of these paths in consecutive order:
+        1- /application/config/options/options.php
+        2- <active theme>/options/options.php
+        3- /packages/whale_options/options/options.php
+        */
 
-        $optionFile = $themePath.DIRECTORY_SEPARATOR.'options'.DIRECTORY_SEPARATOR.'options.php';
-        if(file_exists($optionFile)) {
+        $optionFile = false;
+
+        //1
+        $optionFile1 = DIR_CONFIG_SITE.DIRECTORY_SEPARATOR.'options'.DIRECTORY_SEPARATOR.'options.php'; 
+        if (file_exists($optionFile1)) $optionFile = $optionFile1;
+
+        //2
+        if (!$optionFile) {
+            $page = Page::getByID(1);
+            $theme = $page->getCollectionThemeObject();
+            $themePath = $theme->getThemeDirectory(); //dd($themePath);
+            $themeHandle = $theme->getThemeHandle(); //dd($themeHandle);
+            $optionFile2 = $themePath.DIRECTORY_SEPARATOR.'options'.DIRECTORY_SEPARATOR.'options.php'; //dd($optionFile);
+            if (file_exists($optionFile2)) $optionFile = $optionFile2;
+        }    
+
+        //3
+        if (!$optionFile) {
+            $optionFile3 = $pkgPath.DIRECTORY_SEPARATOR.'options'.DIRECTORY_SEPARATOR.'options.php';
+            if (file_exists($optionFile3)) $optionFile = $optionFile3;
+        }    
+
+
+        if ($optionFile) { 
             include($optionFile); 
             $this->options = $options;
-        }else{    
-            //then check package default option file        
-            $optionFile = $pkgPath.DIRECTORY_SEPARATOR.'options'.DIRECTORY_SEPARATOR.'options.php';
-            if(file_exists($optionFile)) {
-                include($optionFile); 
-                $this->options = $options;
-            }else{
-                //no option file
-            }    
-        }        
+            $this->configNamespace = $themeHandle;
+        }
+
 
         //check if provided data via options.php is valid
         $this->validateOptions($this->options);
 
         //check and replace value of options from db
-        foreach ((array)$this->options['tabs'] as $key => $tab) {
+        foreach ((array)$this->options['tabs'] as $key1 => $tab) {
         foreach ((array)$tab['panels'] as $key2 => $panel) {    
         foreach ((array)$panel['fields'] as $key3 => $field) {
-            if($val = $config->get('options.'.$field['id'])){
-                $this->options['tabs'][$key]['panels'][$key2]['fields'][$key3]['value'] = $val;
+
+            $key = $this->configNamespace.'::'.$this->configGroup.'.'.$field['id'];
+            $value = $config->get($key);
+            if ($value){
+                $this->options['tabs'][$key1]['panels'][$key2]['fields'][$key3]['value'] = $value;
             }
+
         }
         }
         }
@@ -120,8 +147,17 @@ class Options extends DashboardPageController
         foreach ((array)$this->options['tabs'] as $tab) {
         foreach ((array)$tab['panels'] as $panel) {
         foreach ((array)$panel['fields'] as $field) {
-            //if(Request::post($field['id']) && Request::post($field['id'])!=''){ 
-            $config->save('options.'.$field['id'], Request::post($field['id'], ''));
+            //if (Request::post($field['id']) && Request::post($field['id'])!=''){ 
+            $key = $this->configNamespace.'::'.$this->configGroup.'.'.$field['id'];
+            $value = Request::post($field['id'], '');
+            $config->save($key, $value);
+            //if any additional method specified call it here
+
+            if (isset($field['method']) && method_exists($this, $field['method'])){
+                $method = $field['method'];
+                $this->$method($value);
+            }
+
             //}
         }
         }
@@ -158,13 +194,13 @@ class Options extends DashboardPageController
         foreach ((array)$panel['fields'] as $key3 => $field) {
 
             //check type validity
-            if(!in_array($field['type'], $this->fieldTypes)){
+            if (!in_array($field['type'], $this->fieldTypes)){
                 $this->options['tabs'][$key]['panels'][$key2]['fields'][$key3]['type'] = 'error';
                 $this->options['tabs'][$key]['panels'][$key2]['fields'][$key3]['error'] = t('Invalid Type');
             }
 
             //check id uniqueness
-            if(!isset($field['id']) || !in_array($field['id'], $fields)){
+            if (!isset($field['id']) || !in_array($field['id'], $fields)){
                 $fields[] = $field['id'];
             }else{
                 $this->options['tabs'][$key]['panels'][$key2]['fields'][$key3]['type'] = 'error';
@@ -189,6 +225,13 @@ class Options extends DashboardPageController
 
         $this->requireAsset('css', 'dashboard.whale_options');
         $this->requireAsset('javascript', 'dashboard.whale_options');
+    }
+
+    //field specfic methods
+    private function my_method($value)
+    {
+        //do something with $value here
+        //..
     }
 
 }

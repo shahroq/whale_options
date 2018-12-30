@@ -1,7 +1,7 @@
 <?php
 /**
  * @author shahroq <shahroq \at\ yahoo.com>
- * @copyright Copyright (c) 2017 shahroq.
+ * @copyright Copyright (c) 2018 shahroq.
  * http://concrete5.killerwhalesoft.com/addons/
  */
 namespace Concrete\Package\WhaleOptions;
@@ -14,7 +14,7 @@ class Controller extends Package {
 
 	protected $pkgHandle = 'whale_options';
     protected $appVersionRequired = '5.7.3';
-    protected $pkgVersion = '1.0.2';
+    protected $pkgVersion = '1.1.0';
 
 	public function getPackageDescription() 
 	{
@@ -30,10 +30,10 @@ class Controller extends Package {
 	{
 		$pkg = parent::install();
 
-		$this->install_single_page($pkg);
+		$this->createSinglePage($pkg);
 	}
 
- 	private function install_single_page($pkg)
+ 	private function createSinglePage($pkg)
  	{
         //options
         $p = SinglePage::add('/dashboard/pages/options',$pkg);
