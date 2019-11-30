@@ -1,4 +1,4 @@
-[Concrete 5](https://www.concrete5.org) Theme Options
+[concrete5](https://www.concrete5.org) Theme Options
 =====================================================
 
 Description
